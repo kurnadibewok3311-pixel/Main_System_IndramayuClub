@@ -9,125 +9,83 @@
             --biru-fb: #0084ff; --emas: #ffd700; --bg-gelap: #0c0d14; 
             --neon: #00c3ff; --putih: #ffffff;
         }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg-gelap); color: white; margin: 0; }
+        header { background: var(--putih); padding: 15px; border-bottom: 3px solid var(--emas); color: #1a3c5e; display: flex; justify-content: space-between; }
+        .container { max-width: 600px; margin: 20px auto; padding: 10px; }
         
-        body { 
-            font-family: 'Segoe UI', sans-serif; margin: 0; 
-            background: var(--bg-gelap); color: white; padding-bottom: 80px;
-        }
+        /* Jendela Chat AI Mubin */
+        #chat-window { background: #111; border: 2px solid var(--biru-fb); border-radius: 15px; height: 300px; display: flex; flex-direction: column; }
+        #chat-log { flex: 1; padding: 15px; overflow-y: auto; font-size: 13px; }
+        .msg { margin-bottom: 12px; padding: 10px; border-radius: 10px; max-width: 85%; }
+        .mubin { background: var(--biru-fb); align-self: flex-start; }
+        .bapak { background: #333; align-self: flex-end; margin-left: auto; border: 1px solid var(--emas); }
 
-        header { 
-            background: var(--putih); padding: 12px; display: flex; 
-            justify-content: space-between; align-items: center; 
-            border-bottom: 3px solid var(--emas); color: #1a3c5e;
-        }
-
-        .container { max-width: 600px; margin: 0 auto; padding: 10px; }
-
-        /* Monitor Chat AI Mubin */
-        #chat-monitor { 
-            background: #111; border: 2px solid var(--biru-fb); 
-            height: 250px; border-radius: 15px; margin-bottom: 15px;
-            display: flex; flex-direction: column; overflow: hidden;
-        }
-
-        #display-chat { 
-            flex: 1; padding: 15px; overflow-y: auto; font-size: 12px; 
-            background: linear-gradient(to bottom, #111, #1a1a2e);
-        }
-
-        .msg { margin-bottom: 10px; padding: 8px 12px; border-radius: 10px; max-width: 80%; }
-        .mubin { background: var(--biru-fb); align-self: flex-start; border-bottom-left-radius: 2px; }
-        .bapak { background: #333; align-self: flex-end; border-bottom-right-radius: 2px; margin-left: auto; }
-
-        /* Input Area */
-        .input-box { display: flex; gap: 8px; margin-bottom: 15px; }
-        input { 
-            flex: 1; padding: 12px; border-radius: 25px; border: none; 
-            background: #222; color: white; outline: none; border: 1px solid #444;
-        }
-        button { 
-            background: var(--biru-fb); border: none; padding: 10px 20px; 
-            border-radius: 25px; color: white; font-weight: bold; cursor: pointer;
-        }
-
-        .info-storage {
-            background: rgba(255, 255, 255, 0.05); padding: 10px; 
-            border-radius: 10px; font-size: 9px; border-left: 3px solid var(--emas);
-        }
-
-        footer { background: #000; color: yellow; padding: 8px; position: fixed; bottom: 0; width: 100%; text-align: center; font-size: 10px; border-top: 1px solid yellow; }
+        .input-area { display: flex; gap: 10px; margin-top: 15px; }
+        input { flex: 1; padding: 12px; border-radius: 25px; border: 1px solid #444; background: #222; color: white; }
+        button { background: var(--biru-fb); color: white; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: bold; }
+        
+        .storage-footer { font-size: 10px; color: #888; margin-top: 20px; text-align: center; border-top: 1px solid #333; padding-top: 10px; }
     </style>
 </head>
 <body>
 
 <header>
     <div>
-        <div style="font-size: 14px; font-weight: bold;">🤖 AI MUBIN COMMAND</div>
-        <div style="font-size: 9px;">SSH: Hp_nur_android_indrmayuclub ✅</div>
-    </div>
-    <div style="text-align: right; font-size: 9px;">
-        <span style="color: #00ff00;">● SYSTEM ACTIVE</span><br>
-        Admin: Alwi2021
+        <strong>AI MUBIN COMMAND CENTER</strong><br>
+        <small>User: Alwi2021 | SSH: Active ✅</small>
     </div>
 </header>
 
 <div class="container">
-    <div id="chat-monitor">
-        <div style="background: var(--biru-fb); padding: 5px 15px; font-size: 10px; font-weight: bold;">FACEBOOK MESSENGER INTERFACE</div>
-        <div id="display-chat">
-            <div class="msg mubin">Assalamu'alaikum Pak DulKohar. AI Mubin siap melayani di indramayuclubmakrifat@gmail.com. Ada perintah?</div>
+    <div id="chat-window">
+        <div style="background: var(--biru-fb); padding: 5px 15px; font-size: 11px;">MESSENGER INTERFACE (indramayuclubmakrifat@gmail.com)</div>
+        <div id="chat-log">
+            <div class="msg mubin">Assalamu'alaikum Pak DulKohar. Sistem AI Mubin siap. Database bot tersimpan di dkohar011@gmail.com. Ada yang bisa saya bantu?</div>
         </div>
     </div>
 
-    <div class="input-box">
-        <input type="text" id="userInput" placeholder="Tanya AI Mubin...">
-        <button onclick="kirimPesan()">KIRIM</button>
+    <div class="input-area">
+        <input type="text" id="mubinInput" placeholder="Ketik perintah untuk AI Mubin...">
+        <button onclick="mubinChat()">KIRIM</button>
     </div>
 
-    <div class="info-storage">
-        <strong>Pusat Data & Backup:</strong><br>
-        • Media Sosial: indramayuclubmakrifat@gmail.com<br>
-        • Script Storage (Bot): dkohar011@gmail.com (GitHub Repository)<br>
-        • Jalur Akses: SSH RSA 3072 / Termux Localhost
+    <div class="storage-footer">
+        Pusat Skrip: dkohar011@gmail.com (GitHub)<br>
+        Identitas Sosial: indramayuclubmakrifat@gmail.com
     </div>
 </div>
 
-<footer>
-    <marquee>MENGHUBUNGKAN KE GITHUB DKOHAR011... STATUS: AUTHENTICATED AS ALWI2021... SALAM MAKRIFAT INDRAMAYU CLUB...</marquee>
-</footer>
-
 <script>
-    function kirimPesan() {
-        const input = document.getElementById('userInput');
-        const display = document.getElementById('display-chat');
+    function mubinChat() {
+        const input = document.getElementById('mubinInput');
+        const log = document.getElementById('chat-log');
         
         if (input.value.trim() !== "") {
-            // Pesan Bapak
-            const msgBapak = document.createElement('div');
-            msgBapak.className = 'msg bapak';
-            msgBapak.innerText = input.value;
-            display.appendChild(msgBapak);
+            // Pesan Pengguna
+            const userDiv = document.createElement('div');
+            userDiv.className = 'msg bapak';
+            userDiv.innerText = input.value;
+            log.appendChild(userDiv);
 
-            // Respon AI Mubin (Simulasi Tanya Jawab)
+            // Respon Otomatis AI Mubin
             setTimeout(() => {
-                const msgMubin = document.createElement('div');
-                msgMubin.className = 'msg mubin';
+                const mubinDiv = document.createElement('div');
+                mubinDiv.className = 'msg mubin';
+                let res = "Perintah diproses melalui repositori dkohar011...";
                 
-                let respons = "Perintah diterima. Mengakses database di dkohar011@gmail.com...";
-                if(input.value.toLowerCase().includes("halo")) respons = "Halo Bapak! Hub Internasional terpantau aman.";
-                if(input.value.toLowerCase().includes("status")) respons = "Sistem Aktif 100%. Kunci SSH Hp_nur_android terverifikasi.";
+                if(input.value.toLowerCase().includes("status")) res = "Status: Terhubung via SSH Hp_nur_android. Semua sistem normal.";
+                if(input.value.toLowerCase().includes("cek email")) res = "Media sosial aktif: indramayuclubmakrifat@gmail.com terhubung.";
                 
-                msgMubin.innerText = respons;
-                display.appendChild(msgMubin);
-                display.scrollTop = display.scrollHeight;
-            }, 1000);
+                mubinDiv.innerText = res;
+                log.appendChild(mubinDiv);
+                log.scrollTop = log.scrollHeight;
+            }, 800);
 
             input.value = "";
-            display.scrollTop = display.scrollHeight;
+            log.scrollTop = log.scrollHeight;
         }
     }
 </script>
-
 </body>
 </html>
 
