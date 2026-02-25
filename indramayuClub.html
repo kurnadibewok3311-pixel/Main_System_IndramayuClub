@@ -3,188 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indramayu Club - Pusat Komando Digital</title>
+    <title>Indramayu Club - Pusat Komando AI Mubin</title>
     <style>
         :root { 
-            --biru: #1a3c5e; --emas: #ffd700; --putih: #ffffff; 
-            --neon: #00c3ff; --merah: #ff3b3b; --bg-gelap: #0c0d14; 
+            --biru-fb: #0084ff; --emas: #ffd700; --bg-gelap: #0c0d14; 
+            --neon: #00c3ff; --putih: #ffffff;
         }
         
         body { 
             font-family: 'Segoe UI', sans-serif; margin: 0; 
-            background: var(--bg-gelap); color: white; 
-            overflow-x: hidden; padding-bottom: 100px; 
+            background: var(--bg-gelap); color: white; padding-bottom: 80px;
         }
 
-        /* Header Modern Putih-Biru */
         header { 
-            background: var(--putih); padding: 10px 20px; display: flex; 
+            background: var(--putih); padding: 12px; display: flex; 
             justify-content: space-between; align-items: center; 
-            border-bottom: 3px solid var(--emas); position: sticky; 
-            top: 0; z-index: 1000; color: var(--biru);
+            border-bottom: 3px solid var(--emas); color: #1a3c5e;
         }
 
         .container { max-width: 600px; margin: 0 auto; padding: 10px; }
 
-        /* Monitor Jarvis (Pusat Saldo) */
-        #monitor { 
-            background: rgba(0, 0, 68, 0.8); border: 2px solid var(--neon); 
-            box-shadow: 0 0 15px var(--neon); padding: 15px; border-radius: 15px;
-            margin: 15px 0; color: var(--neon);
+        /* Monitor Chat AI Mubin */
+        #chat-monitor { 
+            background: #111; border: 2px solid var(--biru-fb); 
+            height: 250px; border-radius: 15px; margin-bottom: 15px;
+            display: flex; flex-direction: column; overflow: hidden;
         }
 
-        .visual-screen {
-            width: 100%; aspect-ratio: 16/9; background: #111; 
-            margin-bottom: 15px; border-radius: 15px; overflow: hidden; position: relative;
-            border: 2px solid #333;
+        #display-chat { 
+            flex: 1; padding: 15px; overflow-y: auto; font-size: 12px; 
+            background: linear-gradient(to bottom, #111, #1a1a2e);
         }
 
-        /* Box Pelayanan AI */
-        .niaga-box { 
-            background: var(--putih); padding: 15px; border-radius: 15px; 
-            border-left: 8px solid var(--neon); margin-bottom: 15px; color: var(--biru);
-        }
-        
-        .avatar-medsos { width: 50px; height: 50px; border-radius: 50%; float: left; margin-right: 12px; border: 2px solid var(--neon); }
+        .msg { margin-bottom: 10px; padding: 8px 12px; border-radius: 10px; max-width: 80%; }
+        .mubin { background: var(--biru-fb); align-self: flex-start; border-bottom-left-radius: 2px; }
+        .bapak { background: #333; align-self: flex-end; border-bottom-right-radius: 2px; margin-left: auto; }
 
-        /* Card System */
-        .grid-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
-        .card-front { 
-            background: #1a1a1a; border: 1px solid #333; border-radius: 10px; 
-            height: 80px; display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; font-size: 20px;
+        /* Input Area */
+        .input-box { display: flex; gap: 8px; margin-bottom: 15px; }
+        input { 
+            flex: 1; padding: 12px; border-radius: 25px; border: none; 
+            background: #222; color: white; outline: none; border: 1px solid #444;
         }
-
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .link-card { 
-            background: #212233; color: white; text-decoration: none; padding: 12px; 
-            border-radius: 8px; border-left: 4px solid #6842ff; font-size: 11px;
+        button { 
+            background: var(--biru-fb); border: none; padding: 10px 20px; 
+            border-radius: 25px; color: white; font-weight: bold; cursor: pointer;
         }
 
-        footer { 
-            background: #000; color: yellow; padding: 10px; position: fixed; 
-            bottom: 0; width: 100%; z-index: 1100; border-top: 2px solid yellow; 
+        .info-storage {
+            background: rgba(255, 255, 255, 0.05); padding: 10px; 
+            border-radius: 10px; font-size: 9px; border-left: 3px solid var(--emas);
         }
+
+        footer { background: #000; color: yellow; padding: 8px; position: fixed; bottom: 0; width: 100%; text-align: center; font-size: 10px; border-top: 1px solid yellow; }
     </style>
 </head>
-<body onload="initSystem()">
+<body>
 
 <header>
     <div>
-        <div style="font-size: 14px; font-weight: bold;">🦞 INDRAMAYU CLUB</div>
-        <div id="currentTime" style="font-size: 10px; font-family: monospace;"></div>
+        <div style="font-size: 14px; font-weight: bold;">🤖 AI MUBIN COMMAND</div>
+        <div style="font-size: 9px;">SSH: Hp_nur_android_indrmayuclub ✅</div>
     </div>
     <div style="text-align: right; font-size: 9px;">
-        <span style="color: var(--merah);">●</span> KEUANGAN TERKUNCI<br>
-        <span style="color: #666;">Admin: Nur-mini-000555</span>
+        <span style="color: #00ff00;">● SYSTEM ACTIVE</span><br>
+        Admin: Alwi2021
     </div>
 </header>
 
 <div class="container">
-    <div class="visual-screen">
-        <img src="https://uploads.onecompiler.io/448r2umqe/44aq6y4je/1000023476.jpg" style="width:100%; height:100%; object-fit:cover;">
-        <div style="position:absolute; top:10px; right:10px; color:white; font-size:10px; background: rgba(255,0,0,0.7); padding: 2px 8px; border-radius: 5px;">LIVE EMULATOR</div>
-    </div>
-
-    <div id="monitor">
-        <div style="font-size: 11px; border-bottom: 1px solid #00c3ff; padding-bottom: 5px; margin-bottom: 10px;">
-            📡 STATUS: <span id="sys-status">MENGHUBUNGKAN...</span>
-        </div>
-        <div style="text-align: center;">
-            <div style="font-size: 10px; color: #aaa;">SALDO SAH (PERSALINAN)</div>
-            <div id="saldo-display" style="font-size: 24px; font-weight: bold; color: var(--emas);">Rp 0</div>
-            <div id="update-info" style="font-size: 9px; margin-top: 5px;">Mencari data Nur 9...</div>
+    <div id="chat-monitor">
+        <div style="background: var(--biru-fb); padding: 5px 15px; font-size: 10px; font-weight: bold;">FACEBOOK MESSENGER INTERFACE</div>
+        <div id="display-chat">
+            <div class="msg mubin">Assalamu'alaikum Pak DulKohar. AI Mubin siap melayani di indramayuclubmakrifat@gmail.com. Ada perintah?</div>
         </div>
     </div>
 
-    <div class="niaga-box">
-        <img src="https://uploads.onecompiler.io/448r2umqe/44aq6y4je/1000023624.jpg" class="avatar-medsos">
-        <h4 style="margin:0; font-size: 13px;">AI INDRAMAYUCLUB (NUR 9)</h4>
-        <p style="font-size: 10px; margin: 3px 0; color: #666;">Pelayanan: imahazzah51@gmail.com</p>
-        <div style="font-size: 9px; color: #111; font-style: italic; background: #f0f0f0; padding: 5px; border-radius: 5px;">
-        
-    <div class="menu-grid">
-        <a href="https://play.tetris.com/" target="_blank" class="link-card">🎲 Tetris Klasik</a>
-        <a href="https://poki.com/id" target="_blank" class="link-card">💇‍♀️ Game Keluarga</a>
-        <a href="#" onclick="alert('Membuka Ruang Makrifat...class="link-card">🧘 Gudang Ilmu AI</a>
-        <a href="#" onclick="panggilBackup()" class="link-card">🛡️ Paksa Backup (Nur 8)</a>
+    <div class="input-box">
+        <input type="text" id="userInput" placeholder="Tanya AI Mubin...">
+        <button onclick="kirimPesan()">KIRIM</button>
+    </div>
+
+    <div class="info-storage">
+        <strong>Pusat Data & Backup:</strong><br>
+        • Media Sosial: indramayuclubmakrifat@gmail.com<br>
+        • Script Storage (Bot): dkohar011@gmail.com (GitHub Repository)<br>
+        • Jalur Akses: SSH RSA 3072 / Termux Localhost
     </div>
 </div>
 
 <footer>
-    <marquee scrollamount="4">📻 ADZAN OTOMATIS AKTIF (30 MENIT SISTEM REDUP)... 🧲 KEUANGAN DIAWASI OLEH NUR 3... 🦞 INDRAMAYU CLUB MODERN SYSTEM</marquee>
+    <marquee>MENGHUBUNGKAN KE GITHUB DKOHAR011... STATUS: AUTHENTICATED AS ALWI2021... SALAM MAKRIFAT INDRAMAYU CLUB...</marquee>
 </footer>
 
 <script>
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz1s6gA3x-94hcjrrLcMYR6PL9eLlL6GeMKdRzn1i76gYiSGoAzjk58bNRygnykYl8p4g/exec";
-
-function initSystem() {
-    updateTime();
-    muatSaldo();
-}
-
-function updateTime() {
-    const now = new Date();
-    document.getElementById('currentTime').innerText = now.toLocaleString('id-ID') + " WIB";
-    setTimeout(updateTime, 1000);
-}
-
-// Fungsi Mengambil Saldo dari Web App Bapak
-async function muatSaldo() {
-    try {
-        const response = await fetch(WEB_APP_URL);
-        const data = await response.json();
+    function kirimPesan() {
+        const input = document.getElementById('userInput');
+        const display = document.getElementById('display-chat');
         
-        document.getElementById('saldo-display').innerText = "Rp " + data.saldo_bersih_sah.toLocaleString('id-ID');
-        document.getElementById('update-info').innerText = "Terakhir Update: " + data.tanggal;
-        document.getElementById('sys-status').innerText = "CONNECTED (NUR MINI)";
-        document.getElementById('sys-status').style.color = "#00ff00";
-    } catch (err) {
-        document.getElementById('sys-status').innerText = "OFFLINE (CEK KABEL)";
-        document.getElementById('sys-status').style.color = "red";
-    }
-}
+        if (input.value.trim() !== "") {
+            // Pesan Bapak
+            const msgBapak = document.createElement('div');
+            msgBapak.className = 'msg bapak';
+            msgBapak.innerText = input.value;
+            display.appendChild(msgBapak);
 
-function panggilBackup() {
-    alert("Nur 8: Menjalankan Protokol Backup ke Folder Motherai...");
-    fetch(WEB_APP_URL + "?action=backup")
-        .then(res => res.text())
-        .then(msg => alert(msg));
+            // Respon AI Mubin (Simulasi Tanya Jawab)
+            setTimeout(() => {
+                const msgMubin = document.createElement('div');
+                msgMubin.className = 'msg mubin';
+                
+                let respons = "Perintah diterima. Mengakses database di dkohar011@gmail.com...";
+                if(input.value.toLowerCase().includes("halo")) respons = "Halo Bapak! Hub Internasional terpantau aman.";
+                if(input.value.toLowerCase().includes("status")) respons = "Sistem Aktif 100%. Kunci SSH Hp_nur_android terverifikasi.";
+                
+                msgMubin.innerText = respons;
+                display.appendChild(msgMubin);
+                display.scrollTop = display.scrollHeight;
+            }, 1000);
 
-// TES KEAKTIFAN NUR MINI
-async function kirimPesanKejujuran() {
-    const inputPesan = document.getElementById('isi-pesan');
-    const layar = document.getElementById('layar-komentar');
-    const pesan = inputPesan.value;
-
-    if(pesan) {
-        // Tampilkan pesan Bapak di layar
-        const div = document.createElement('div');
-        div.innerHTML = `<span style="color:gold;">[${new Date().toLocaleTimeString()}] Bapak:</span> ${pesan}`;
-        layar.appendChild(div);
-
-        // RESPONS OTOMATIS NUR MINI (Tes Keaktifan)
-        if(pesan.toLowerCase() === "nur000555") {
-            const resp = document.createElement('div');
-            resp.style.color = "#00ff00";
-            resp.style.fontWeight = "bold";
-            resp.innerHTML = `[${new Date().toLocaleTimeString()}] AI Mini: HADIR PAK DULKOHAR! Sistem Piramida Guard Aktif 100%.`;
-            layar.appendChild(resp);
-            
-            // Suara sambutan (Opsional)
-            alert("Hadir Pak DulKohar! Nur Mini siap menjaga Gudang Ilmu.");
+            input.value = "";
+            display.scrollTop = display.scrollHeight;
         }
-
-        inputPesan.value = "";
-        layar.scrollTop = layar.scrollHeight;
     }
-}
-
-}
 </script>
+
 </body>
 </html>
-
-
-
 
