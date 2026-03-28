@@ -102,7 +102,44 @@
 
     document.getElementById('formPendaftaran').addEventListener('submit', function(e) {
         e.preventDefault();
-        
+
+        const SCRIPT_URL = "https://ais-dev-5fsvg3qeold4xc7426chsw-717075273571.asia-southeast1.run.app/api/termux/sync";
+
+
+    
+    const pesanDiv = document.getElementById('pesan-nur');
+    pesanDiv.innerHTML = "Sedang mengirim data...";
+
+    // Mengambil data dari input form
+    const data = {
+        identitas: document.getElementById('nama').value,
+        status: "AKTIF", // Status default sesuai skrip Python Anda
+        pesan: "Salam Makrifat dari " + document.getElementById('nama').value,
+        waktu: new Date().toLocaleTimeString('it-IT') // Format HH:mm:ss
+    };
+
+    // Mengirim data ke API menggunakan Fetch
+    fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'cors', // Pastikan API mendukung CORS
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            pesanDiv.innerHTML = "Respon Nur: Berhasil Terkoneksi";
+        } else {
+            pesanDiv.innerHTML = "Hambatan: Status " + response.status;
+        }
+    })
+    .catch(error => {
+        pesanDiv.innerHTML = "Hambatan: " + error.message;
+    });
+});
+
+    
         const pesanDiv = document.getElementById('pesan-nur');
         pesanDiv.innerText = "Nur 7 sedang menyapa semesta... Data sedang dikirim ke Rahim Dimensi.";
         
