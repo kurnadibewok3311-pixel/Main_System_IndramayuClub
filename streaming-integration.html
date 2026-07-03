@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indramayu Club - Streaming Integration</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --hutan-tua: #06140b;
+  --daun: #1d6b3a;
+  --zamrud: #27ae60;
+  --emas: #d4af37;
+  --emas-terang: #ffd700;
+  --emas-muda: #f7e27b;
+  --batik: #0e2415;
+  --kartu: #0f1f15;
+  --teks: #fffdf2;
+  --abu-emas: #c9a227;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: repeating-linear-gradient(45deg, var(--batik) 0px, var(--batik) 20px, var(--hutan-tua) 20px, var(--hutan-tua) 40px), var(--hutan-tua);
+  color: var(--teks);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* COIN DISPLAY PANEL */
+.coin-panel {
+  background: linear-gradient(135deg, #112d1b, #0a1f12);
+  border: 2px solid var(--emas-terang);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  box-shadow: 0 0 30px rgba(212,175,55,0.4);
+}
+
+.coin-box {
+  background: rgba(0,0,0,0.3);
+  border: 1.5px solid var(--emas);
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+}
+
+.coin-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.coin-amount {
+  font-family: 'Cinzel', serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--emas-terang);
+  text-shadow: 0 0 10px rgba(255,215,0,0.6);
+  margin: 5px 0;
+}
+
+.coin-label {
+  font-size: 0.85rem;
+  color: var(--emas-muda);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* USER INFO */
+.user-info {
+  background: linear-gradient(135deg, #0f1f15, #1a3323);
+  border: 1.5px solid var(--emas);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-level {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  color: var(--emas-muda);
+  font-weight: 700;
+}
+
+.user-id {
+  font-size: 0.9rem;
+  color: var(--abu-emas);
+}
+
+/* CLAIM BUTTON */
+.btn-claim {
+  background: linear-gradient(135deg, var(--emas), var(--emas-terang));
+  color: var(--hutan-tua);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 900;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(255,215,0,0.5);
+  transition: all 0.3s ease;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.05em;
+}
+
+.btn-claim:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(255,215,0,0.8);
+}
+
+.btn-claim:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* STREAMING AREA */
+.streaming-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.streaming-card {
+  background: linear-gradient(145deg, var(--kartu), #14291c);
+  border: 1.5px solid var(--emas);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(212,175,55,0.3);
+  transition: transform 0.3s ease;
+}
+
+.streaming-card:hover {
+  transform: translateY(-5px);
+}
+
+.stream-header {
+  background: linear-gradient(90deg, #1d6b3a, #27ae60);
+  padding: 15px;
+  border-bottom: 2px solid var(--emas-terang);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stream-title {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  color: var(--emas-muda);
+}
+
+.live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #ff3b3b;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.stream-embed {
+  width: 100%;
+  height: 250px;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+.stream-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.stream-footer {
+  padding: 15px;
+  background: rgba(0,0,0,0.2);
+}
+
+.stream-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-label {
+  color: var(--abu-emas);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-value {
+  color: var(--emas-terang);
+  font-weight: 700;
+}
+
+/* GIFT BUTTONS */
+.gift-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.btn-gift {
+  padding: 8px;
+  border: 1.5px solid var(--emas);
+  background: rgba(212,175,55,0.1);
+  color: var(--emas-terang);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.btn-gift:hover {
+  background: linear-gradient(135deg, var(--emas), var(--emas-terang));
+  color: var(--hutan-tua);
+  transform: scale(1.05);
+}
+
+/* TOAST NOTIFICATION */
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  background: linear-gradient(135deg, var(--hutan-tua), var(--kartu));
+  border: 2px solid var(--emas);
+  color: var(--emas-terang);
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 0 0 20px rgba(212,175,55,0.4);
+  animation: slideIn 0.3s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* TRANSACTION LOG */
+.transaction-log {
+  background: linear-gradient(135deg, #0f1f15, #1a3323);
+  border: 1.5px solid var(--emas);
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.transaction-log h3 {
+  color: var(--emas-muda);
+  margin-bottom: 10px;
+  font-family: 'Cinzel', serif;
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed rgba(212,175,55,0.2);
+  font-size: 0.85rem;
+}
+
+.tx-time {
+  color: var(--abu-emas);
+}
+
+.tx-amount {
+  color: var(--emas-terang);
+  font-weight: 700;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- USER INFO -->
+  <div class="user-info">
+    <div>
+      <div class="user-level" id="userLevel">Loading...</div>
+      <div class="user-id" id="userId">User ID: -</div>
+    </div>
+    <button class="btn-claim" id="btnDailyReward" onclick="claimDailyReward()">📅 Claim Daily Reward</button>
+  </div>
+
+  <!-- COIN DISPLAY -->
+  <div class="coin-panel">
+    <div class="coin-box">
+      <div class="coin-icon">💰</div>
+      <div class="coin-amount" id="rpnurAmount">0</div>
+      <div class="coin-label">RpNur (Rupiah)</div>
+    </div>
+    <div class="coin-box">
+      <div class="coin-icon">🎁</div>
+      <div class="coin-amount" id="gifnurAmount">0.00</div>
+      <div class="coin-label">GifNur (Gift Points)</div>
+    </div>
+    <div class="coin-box">
+      <div class="coin-icon">🎫</div>
+      <div class="coin-amount" id="vouchernurAmount">0</div>
+      <div class="coin-label">VoucherNur (Tickets)</div>
+    </div>
+    <div class="coin-box">
+      <div class="coin-icon">⭐</div>
+      <div class="coin-amount" id="totalEarnedAmount">0</div>
+      <div class="coin-label">Total Earned</div>
+    </div>
+  </div>
+
+  <!-- STREAMING CARDS -->
+  <div class="streaming-grid" id="streamingGrid">
+    <!-- Cards will be generated here -->
+  </div>
+
+  <!-- TRANSACTION LOG -->
+  <div class="transaction-log">
+    <h3>📋 Transaction History</h3>
+    <div id="transactionList" style="max-height: 300px; overflow-y: auto;"></div>
+  </div>
+</div>
+
+<!-- TOAST NOTIFICATIONS -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="coin-system-api.js"></script>
+<script>
+// Configuration
+const STREAMS = [
+  { id: 'M001', name: 'Bang Jago Nur', level: 'level1', embedUrl: '', uploadUrl: '' },
+  { id: 'M002', name: 'Kang Alam', level: 'level1', embedUrl: '', uploadUrl: '' },
+  { id: 'M005', name: 'Raden Agung Nur', level: 'sultan', embedUrl: '', uploadUrl: '' },
+  { id: 'M006', name: 'Ratu Arum Makrifat', level: 'sultan', embedUrl: '', uploadUrl: '' }
+];
+
+// Global coin system instance
+let coinSystem = null;
+let userId = 'user_' + Math.random().toString(36).substr(2, 9);
+let userLevel = 'level1'; // Default
+
+// Initialize
+function init() {
+  // Get from URL params or localStorage
+  const params = new URLSearchParams(window.location.search);
+  userId = params.get('userId') || localStorage.getItem('userId') || userId;
+  userLevel = params.get('level') || localStorage.getItem('userLevel') || 'level1';
+
+  localStorage.setItem('userId', userId);
+  localStorage.setItem('userLevel', userLevel);
+
+  coinSystem = new CoinSystem(userId, userLevel);
+  updateDisplay();
+  renderStreams();
+}
+
+// Update UI Display
+function updateDisplay() {
+  const balance = coinSystem.getBalance();
+  document.getElementById('rpnurAmount').textContent = balance.rpnur.toLocaleString('id-ID');
+  document.getElementById('gifnurAmount').textContent = balance.gifnur;
+  document.getElementById('vouchernurAmount').textContent = balance.vouchernur.toLocaleString('id-ID');
+  document.getElementById('totalEarnedAmount').textContent = balance.totalEarned.toLocaleString('id-ID');
+  document.getElementById('userLevel').textContent = COIN_CONFIG.levels[userLevel].name + ' Level';
+  document.getElementById('userId').textContent = 'User ID: ' + userId.toUpperCase();
+  updateTransactionLog();
+}
+
+// Render Streaming Cards
+function renderStreams() {
+  const grid = document.getElementById('streamingGrid');
+  grid.innerHTML = '';
+
+  STREAMS.forEach(stream => {
+    const card = document.createElement('div');
+    card.className = 'streaming-card';
+    card.innerHTML = `
+      <div class="stream-header">
+        <div class="stream-title">${stream.name}</div>
+        <div class="live-indicator">● LIVE</div>
+      </div>
+      <div class="stream-embed">
+        <iframe src="${stream.embedUrl || 'about:blank'}" allowfullscreen></iframe>
+      </div>
+      <div class="stream-footer">
+        <div class="stream-stats">
+          <div class="stat-item">
+            <div class="stat-label">Viewers</div>
+            <div class="stat-value">1.2K</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Duration</div>
+            <div class="stat-value">2h 15m</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Level</div>
+            <div class="stat-value">${stream.level.toUpperCase()}</div>
+          </div>
+        </div>
+        <div class="gift-buttons">
+          <button class="btn-gift" onclick="throwGift('rpnur', 1000, '${stream.id}', '💰')">💰 1K</button>
+          <button class="btn-gift" onclick="throwGift('gifnur', 0.5, '${stream.id}', '🎁')">🎁 G</button>
+          <button class="btn-gift" onclick="throwGift('vouchernur', 1, '${stream.id}', '🎫')">🎫 1</button>
+          <button class="btn-gift" onclick="earnStreaming('${stream.id}', 30)">⭐ Earn</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// Claim Daily Reward
+function claimDailyReward() {
+  const result = coinSystem.claimDailyReward();
+  if (result.success) {
+    updateDisplay();
+    showToast(`🎉 Daily reward claimed! +${Math.floor(result.reward.rpnur)} RpNur`);
+    document.getElementById('btnDailyReward').disabled = true;
+  } else {
+    showToast(`⚠️ ${result.error}`);
+  }
+}
+
+// Throw Gift
+function throwGift(coinType, amount, streamId, emoji) {
+  const result = coinSystem.throwGift(coinType, amount, streamId, emoji);
+  if (result.success) {
+    updateDisplay();
+    showToast(`${emoji} Sent ${amount} ${coinType} to Room ${streamId}!`);
+  } else {
+    showToast(`❌ ${result.error}`);
+  }
+}
+
+// Earn from Streaming
+function earnStreaming(streamId, minutes) {
+  const result = coinSystem.earnFromStreaming(minutes, streamId);
+  updateDisplay();
+  showToast(`💎 Earned from ${streamId}: +${Math.floor(result.earned.rpnur)} RpNur`);
+}
+
+// Show Toast
+function showToast(message) {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+// Update Transaction Log
+function updateTransactionLog() {
+  const list = document.getElementById('transactionList');
+  const transactions = coinSystem.getTransactionHistory(10);
+  list.innerHTML = transactions.map(tx => `
+    <div class="transaction-item">
+      <span class="tx-time">${new Date(tx.timestamp).toLocaleTimeString('id-ID')}</span>
+      <span>${tx.description || tx.type}</span>
+      <span class="tx-amount">${tx.amount > 0 ? '+' : ''}${tx.amount} ${tx.coinType}</span>
+    </div>
+  `).join('');
+}
+
+// Initialize on load
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
